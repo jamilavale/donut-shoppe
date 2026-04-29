@@ -78,6 +78,12 @@ export default function App() {
   const [showSummary, setShowSummary] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
   const [toast, setToast] = useState(null);
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     try {
@@ -206,6 +212,10 @@ export default function App() {
             <h1>Interweave Donut Shoppe</h1>
             <p className="sub">Sunday Register</p>
           </div>
+        </div>
+        <div className="hdr-clock">
+          <span className="clock-time">{now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}</span>
+          <span className="clock-date">{now.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric", year: "numeric" })}</span>
         </div>
         <div className="hdr-r">
           <div className="staff-group">
@@ -536,6 +546,24 @@ body { margin: 0; }
 }
 .sub { margin: 1px 0 0; font-size: 10px; color: var(--ink-soft);
   letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; }
+
+.hdr-clock {
+  display: flex; flex-direction: column; align-items: center;
+  margin: 0 auto;
+}
+.clock-time {
+  font-family: 'Fraunces', serif;
+  font-weight: 700; font-size: 20px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  line-height: 1;
+}
+.clock-date {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
 
 .hdr-r { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
