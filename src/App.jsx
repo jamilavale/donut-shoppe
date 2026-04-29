@@ -214,7 +214,7 @@ export default function App() {
           </div>
         </div>
         <div className="hdr-clock">
-          <span className="clock-time">{now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}</span>
+          <span className="clock-time">{now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
           <span className="clock-date">{now.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric", year: "numeric" })}</span>
         </div>
         <div className="hdr-r">
@@ -237,14 +237,6 @@ export default function App() {
             >
               <Minus size={14} strokeWidth={3} />
             </button>
-          </div>
-          <div className="stat">
-            <span className="stat-n">{shift.transactions}</span>
-            <span className="stat-l">orders</span>
-          </div>
-          <div className="stat stat-money">
-            <span className="stat-n">{fmt(shift.revenue)}</span>
-            <span className="stat-l">revenue</span>
           </div>
           <button className="btn-summary" onClick={() => setShowSummary(true)}>
             <Receipt size={16} /> Summary
@@ -300,26 +292,6 @@ export default function App() {
               <button className="x" onClick={cancelOrder} title="Clear order">
                 <X size={14} />
               </button>
-            )}
-          </div>
-
-          <div className="ticket-body">
-            {!hasOrder && (
-              <div className="empty">
-                <Coffee size={28} strokeWidth={1.2} />
-                <p>Tap items to start</p>
-              </div>
-            )}
-            {hasOrder && (
-              <ul className="lines">
-                {orderLines.map(([id, q]) => (
-                  <li key={id} className="line">
-                    <span className="line-q">{q}×</span>
-                    <span className="line-n">{NAME[id]}</span>
-                    <span className="line-p">{fmt(PRICE[id] * q)}</span>
-                  </li>
-                ))}
-              </ul>
             )}
           </div>
 
@@ -382,6 +354,26 @@ export default function App() {
             >
               <Check size={16} /> Complete order
             </button>
+          </div>
+
+          <div className="ticket-body">
+            {!hasOrder && (
+              <div className="empty">
+                <Coffee size={28} strokeWidth={1.2} />
+                <p>Tap items to start</p>
+              </div>
+            )}
+            {hasOrder && (
+              <ul className="lines">
+                {orderLines.map(([id, q]) => (
+                  <li key={id} className="line">
+                    <span className="line-q">{q}×</span>
+                    <span className="line-n">{NAME[id]}</span>
+                    <span className="line-p">{fmt(PRICE[id] * q)}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </aside>
       </div>
@@ -798,7 +790,7 @@ body { margin: 0; }
 /* Totals */
 .totals {
   padding: 10px 12px;
-  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
   background: var(--cream);
 }
 .total-big {
