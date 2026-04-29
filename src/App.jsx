@@ -640,14 +640,11 @@ body { margin: 0; }
 }
 @media (max-width: 1100px) { .body { grid-template-columns: 1fr 260px; } }
 @media (max-width: 880px) {
-  .body { grid-template-columns: 1fr; }
-  .app { height: auto; overflow: visible; }
-  .totals {
-    position: sticky;
-    bottom: 0;
-    z-index: 10;
-    box-shadow: 0 -4px 16px rgba(42,24,16,.12);
+  .body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
   }
+  .ticket { max-height: 48vh; }
 }
 
 /* Menu */
