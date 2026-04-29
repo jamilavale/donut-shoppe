@@ -295,6 +295,26 @@ export default function App() {
             )}
           </div>
 
+          <div className="ticket-body">
+            {!hasOrder && (
+              <div className="empty">
+                <Coffee size={28} strokeWidth={1.2} />
+                <p>Tap items to start</p>
+              </div>
+            )}
+            {hasOrder && (
+              <ul className="lines">
+                {orderLines.map(([id, q]) => (
+                  <li key={id} className="line">
+                    <span className="line-q">{q}×</span>
+                    <span className="line-n">{NAME[id]}</span>
+                    <span className="line-p">{fmt(PRICE[id] * q)}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
           <div className="totals">
             <div className="total-big">
               <span>Total</span>
@@ -354,26 +374,6 @@ export default function App() {
             >
               <Check size={16} /> Complete order
             </button>
-          </div>
-
-          <div className="ticket-body">
-            {!hasOrder && (
-              <div className="empty">
-                <Coffee size={28} strokeWidth={1.2} />
-                <p>Tap items to start</p>
-              </div>
-            )}
-            {hasOrder && (
-              <ul className="lines">
-                {orderLines.map(([id, q]) => (
-                  <li key={id} className="line">
-                    <span className="line-q">{q}×</span>
-                    <span className="line-n">{NAME[id]}</span>
-                    <span className="line-p">{fmt(PRICE[id] * q)}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
         </aside>
       </div>
@@ -639,7 +639,16 @@ body { margin: 0; }
   min-height: 0;
 }
 @media (max-width: 1100px) { .body { grid-template-columns: 1fr 260px; } }
-@media (max-width: 880px) { .body { grid-template-columns: 1fr; } .app { height: auto; overflow: visible; } }
+@media (max-width: 880px) {
+  .body { grid-template-columns: 1fr; }
+  .app { height: auto; overflow: visible; }
+  .totals {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    box-shadow: 0 -4px 16px rgba(42,24,16,.12);
+  }
+}
 
 /* Menu */
 .menu {
@@ -790,7 +799,7 @@ body { margin: 0; }
 /* Totals */
 .totals {
   padding: 10px 12px;
-  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--line);
   background: var(--cream);
 }
 .total-big {
